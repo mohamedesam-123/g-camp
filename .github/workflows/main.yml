@@ -7,7 +7,7 @@ jobs:
     - uses: actions/checkout@v6.0.2
     - name: Building docker file
       run: |
-        echo "$(( secrets.DOCKER_FILE ))" | docker login -u "${{ secrets.DOCKER_FILE }}" --password-stdin
+        echo "$(( secrets.DOCKER_FILE ))" | docker login -u "${{ secrets.mohamedesam123 }}" --password-stdin
         docker build -t mohamedesam123/python:v1 .
         docker push mohamedesam123/python
   test:
