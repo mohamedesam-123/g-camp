@@ -1,0 +1,21 @@
+name: cloud 
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: action/checkout@v6.0.2
+    - name: Building docker file
+      run: docker build -t FirstTry:v1 .
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6.0.2
+    - name: Testing docker file
+      run: echo "Testing.."
+  Debloy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6.0.2
+    - name: deploy docker file
+      run: docker run -p 8080:80 FirstTry:v1
