@@ -6,7 +6,9 @@ jobs:
     steps:
     - uses: actions/checkout@v6.0.2
     - name: Building docker file
-      run: docker build -t firsttry:v1 .
+      run: |
+        docker build -t mohamedesam123/python:v1 .
+        docker push mohamedesam123/python
   test:
     runs-on: ubuntu-latest
     steps:
@@ -18,4 +20,4 @@ jobs:
     steps:
     - uses: actions/checkout@v6.0.2
     - name: deploy docker file
-      run: docker run -p 8080:80 firsttry:v1
+      run: docker run -p 8080:80 mohamedesam123/python:v1
