@@ -1,24 +1,29 @@
-name: cloud 
+name: CI pipeline
 on: [push]
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v6.0.2
-    - name: Building docker file
-      run: |
-        echo "$(( secrets.DOCKER_FILE ))" | docker login -u "${{ secrets.mohamedesam123 }}" --password-stdin
-        docker build -t mohamedesam123/python:v1 .
-        docker push mohamedesam123/python
+      - uses: actions/checkout@v4 
+      - name: Build and Push Docker Image
+        run: |
+          echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u mohamedesam123 --password-stdin
+          docker build -t mohamedesam123/gcamp_team1:v1 .
+          docker push amyo123/python:v1
+
   test:
     runs-on: ubuntu-latest
+    needs: build  
     steps:
-    - uses: actions/checkout@v6.0.2
-    - name: Testing docker file
-      run: echo "Testing.."
-  Debloy:
+      - name: Testing
+        run: echo "Testing in progress...."
+
+  deploy:
     runs-on: ubuntu-latest
+    needs: test  
     steps:
-    - uses: actions/checkout@v6.0.2
-    - name: deploy docker file
-      run: docker run -p 8080:80 mohamedesam123/python:v1
+      - name: Deploy Docker Image
+        run: |
+          echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u amyo123 --password-stdin
+          docker run -d -p 8080:80 amyo123/python:v1
